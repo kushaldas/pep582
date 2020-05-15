@@ -9,7 +9,7 @@ This is a single file implementation for [PEP 582](https://www.python.org/dev/pe
 
 
 ```
-
+curl https://raw.githubusercontent.com/kushaldas/pep582/master/pep582.py -o pep582.py
 python3 pep582.py --install
 ```
 
