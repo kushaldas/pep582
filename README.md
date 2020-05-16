@@ -20,5 +20,5 @@ will start using it to install any modules via `pip` and also use those modules 
 python3 -m pip install requests
 ```
 
-This command will then install the `request` module in `__pypackages__`.
+This command will then install the `requests` module in `__pypackages__`.
 
