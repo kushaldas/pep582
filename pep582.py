@@ -31,6 +31,7 @@ def install():
         fobj.write("import pep582;pep582.enable_local_pypackages()\n")
 
     print(f"Successfully installed in {site_path}")
+    print(f"\nTo uninstall pep582:\n{sys.executable} -m pep582 --uninstall")
 
 
 def uninstall():
