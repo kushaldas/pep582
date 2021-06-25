@@ -113,6 +113,9 @@ def main():
     if args.uninstall:
         uninstall()
 
+    if not args.install or args.uninstall:
+        parser.print_help()
+
 
 if __name__ == "__main__":
     main()
