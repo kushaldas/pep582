@@ -11,6 +11,7 @@ import argparse
 
 def install():
     """To install in the users site-packaes directory."""
+
     site_path = os.path.join(site.getusersitepackages(), "pep582.py")
     site_pth = os.path.join(site.getusersitepackages(), "pep582.pth")
     data = ""
@@ -30,6 +31,27 @@ def install():
         fobj.write("import pep582;pep582.enable_local_pypackages()\n")
 
     print(f"Successfully installed in {site_path}")
+    print(f"\nTo uninstall pep582:\n{sys.executable} -m pep582 --uninstall")
+
+
+def uninstall():
+    """To uninstall from the users site-packages directory"""
+
+    site_packages = site.getusersitepackages()
+    site_path = os.path.join(site_packages, "pep582.py")
+    site_pth = os.path.join(site_packages, "pep582.pth")
+
+    if not os.path.exists(site_path) and not os.path.exists(site_pth):
+        print(f"pep582.py not found in {site_packages}")
+        return
+
+    if os.path.exists(site_path):
+        os.remove(site_path)
+
+    if os.path.exists(site_pth):
+        os.remove(site_pth)
+
+    print(f"Successfully uninstalled from {site_packages}")
 
 
 def enable_magic(pypackages_path: str):
@@ -77,10 +99,22 @@ def main():
         action="store_true",
         help="Install the tool to users' site-packages directory",
     )
+    parser.add_argument(
+        "--uninstall",
+        action="store_true",
+        help="Uninnstall the tool from users' site-packages directory",
+    )
+
     args = parser.parse_args()
 
     if args.install:
         install()
+
+    if args.uninstall:
+        uninstall()
+
+    if not args.install or args.uninstall:
+        parser.print_help()
 
 
 if __name__ == "__main__":
