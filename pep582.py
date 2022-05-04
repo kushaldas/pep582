@@ -10,8 +10,7 @@ import argparse
 
 
 def install():
-    "To install in the users site-packaes directory"
-
+    """To install in the users site-packaes directory."""
     site_path = os.path.join(site.getusersitepackages(), "pep582.py")
     site_pth = os.path.join(site.getusersitepackages(), "pep582.pth")
     data = ""
@@ -34,9 +33,7 @@ def install():
 
 
 def enable_magic(pypackages_path: str):
-    """Enables our __pypackages__ if exits, also tells pip where to install
-
-    """
+    """Enables our __pypackages__ if it exists, also tells pip where to install."""
     major = sys.version_info.major
     minor = sys.version_info.minor
     libname = "lib"
@@ -59,8 +56,7 @@ def enable_magic(pypackages_path: str):
 
 
 def enable_local_pypackages():
-    """Function to use local __pypackages__ if not running via a script.
-    """
+    """Function to use local __pypackages__ if not running via a script."""
     pwd = os.getcwd()
     if sys.argv[0] == "" or sys.argv[0] == "-m":  # Means python3
         pypackages_path = os.path.join(pwd, "__pypackages__")
@@ -74,8 +70,7 @@ def enable_local_pypackages():
 
 
 def main():
-    """The main entry point.
-    """
+    """The main entry point."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--install",
@@ -90,4 +85,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
