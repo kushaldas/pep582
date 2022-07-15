@@ -9,7 +9,7 @@ Here is a demo on Windows
 ## How to use?
 
 ```
-curl https://raw.githubusercontent.com/kushaldas/pep582/master/pep582.py -o pep582.py
+curl https://raw.githubusercontent.com/kushaldas/pep582/main/pep582.py -o pep582.py
 python3 pep582.py --install
 ```
 
