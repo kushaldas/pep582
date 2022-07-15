@@ -7,7 +7,22 @@ import os
 import sys
 import site
 import argparse
+import sysconfig
 
+# Because a Fedora patch breaks it otherwise
+# https://github.com/python/cpython/compare/3.10...fedora-python:cpython:fedora-3.10#diff-d593bd299ba58e440ba411ffa0640ccd9d20d518b0cf2644ed4bdb75a82a3e70R61
+posix_prefix =  {
+        'stdlib': '{installed_base}/{platlibdir}/python{py_version_short}',
+        'platstdlib': '{platbase}/{platlibdir}/python{py_version_short}',
+        'purelib': '{base}/lib/python{py_version_short}/site-packages',
+        'platlib': '{platbase}/{platlibdir}/python{py_version_short}/site-packages',
+        'include':
+            '{installed_base}/include/python{py_version_short}{abiflags}',
+        'platinclude':
+            '{installed_platbase}/include/python{py_version_short}{abiflags}',
+        'scripts': '{base}/bin',
+        'data': '{base}',
+        }
 
 def install():
     """To install in the users site-packaes directory."""
@@ -71,6 +86,8 @@ def enable_magic(pypackages_path: str):
             site_packages_path = os.path.join(
                 pypackages_path, libname, "site-packages"
             )
+        else:
+            sysconfig._INSTALL_SCHEMES["posix_prefix"] = posix_prefix
         sys.path.insert(1, site_packages_path)
         if sys.argv[0] == "-m":
             # let us try to fix pip here
