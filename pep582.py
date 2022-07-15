@@ -109,11 +109,9 @@ def main():
 
     if args.install:
         install()
-
-    if args.uninstall:
+    elif args.uninstall:
         uninstall()
-
-    if not args.install or args.uninstall:
+    else:
         parser.print_help()
 
 
