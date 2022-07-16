@@ -11,7 +11,7 @@ import sysconfig
 
 # Because a Fedora patch breaks it otherwise
 # https://github.com/python/cpython/compare/3.10...fedora-python:cpython:fedora-3.10#diff-d593bd299ba58e440ba411ffa0640ccd9d20d518b0cf2644ed4bdb75a82a3e70R61
-posix_prefix =  {
+cpython_posix_prefix =  {
         'stdlib': '{installed_base}/{platlibdir}/python{py_version_short}',
         'platstdlib': '{platbase}/{platlibdir}/python{py_version_short}',
         'purelib': '{base}/lib/python{py_version_short}/site-packages',
@@ -74,20 +74,28 @@ def enable_magic(pypackages_path: str):
     major = sys.version_info.major
     minor = sys.version_info.minor
     libname = "lib"
+    if sys.implementation.name == "cpython":
+        pname = "python"
+    elif sys.implementation.name == "pypy":
+        pname = "pypy"
+    else:
+        raise(OSError("Your Python implementation is not supported yet. Talk to Kushal."))
     # On Windows the spelling is capital Lib inside of the PIP_PREFIX
     if os.name == "nt":
         libname = "Lib"
     if os.path.exists(pypackages_path):
         os.environ["VIRTUAL_ENV"] = pypackages_path
         site_packages_path = os.path.join(
-            pypackages_path, libname, f"python{major}.{minor}", "site-packages"
+            pypackages_path, libname, f"{pname}{major}.{minor}", "site-packages"
         )
         if os.name == "nt":
             site_packages_path = os.path.join(
                 pypackages_path, libname, "site-packages"
             )
         else:
-            sysconfig._INSTALL_SCHEMES["posix_prefix"] = posix_prefix
+            # We need this thanks to the Fedora's patch mentioned above.
+            if sys.implementation.name == "cpython":
+                sysconfig._INSTALL_SCHEMES["posix_prefix"] = cpython_posix_prefix
         sys.path.insert(1, site_packages_path)
         if sys.argv[0] == "-m":
             # let us try to fix pip here
