@@ -13,11 +13,25 @@ curl https://raw.githubusercontent.com/kushaldas/pep582/main/pep582.py -o pep582
 python3 pep582.py --install
 ```
 
-Now, inside of any directory, if you create  another directory called `__pypackages__`, `python3`
-will start using it to install any modules via `pip` and also use those modules (if you are in the same directory).
+If you are using `pypy3` then use the same, you will have to install `pip` first though.
+
+```
+pypy3 -m ensurepip
+pypy3 pep582.py --install
+```
+
+Now, inside of any directory, if you create  another directory called
+`__pypackages__`, `python3/pypy3` will start using it to install any modules
+via `pip` and also use those modules (if you are in the same directory).
 
 ```
 python3 -m pip install requests
+```
+
+or 
+
+```
+pypy3 -m pip install requests
 ```
 
 This command will then install the `requests` module in `__pypackages__`.
@@ -26,5 +40,6 @@ This command will then install the `requests` module in `__pypackages__`.
 ## What about executables installed via the modules?
 
 The current implementation only supports running things via `python3 -m
-modulename` if you are in the parent directory of the `__pypackages__`. 
+modulename` if you are in the parent directory of the `__pypackages__`. Same
+with `pypy3 -m modulename`.
 
