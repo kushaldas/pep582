@@ -96,7 +96,7 @@ def enable_magic(pypackages_path: str):
             # We need this thanks to the Fedora's patch mentioned above.
             if sys.implementation.name == "cpython":
                 sysconfig._INSTALL_SCHEMES["posix_prefix"] = cpython_posix_prefix
-        sys.path.insert(1, site_packages_path)
+        sys.path.insert(0, site_packages_path)
         if sys.argv[0] == "-m":
             # let us try to fix pip here
             os.environ["PIP_PREFIX"] = pypackages_path
