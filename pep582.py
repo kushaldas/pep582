@@ -100,7 +100,8 @@ def enable_magic(pypackages_path: str):
             if sys.implementation.name == "cpython":
                 sysconfig._INSTALL_SCHEMES["posix_prefix"] = cpython_posix_prefix
         sys.path.insert(0, site_packages_path)
-        sys.path.insert(1, platlib_site_packages_path)
+        if os.name != "nt" and site_packages_path != platlib_site_packages_path:
+            sys.path.insert(1, platlib_site_packages_path)
         if sys.argv[0] == "-m":
             # let us try to fix pip here
             os.environ["PIP_PREFIX"] = pypackages_path
