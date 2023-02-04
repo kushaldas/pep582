@@ -25,7 +25,7 @@ cpython_posix_prefix =  {
         }
 
 def install():
-    """To install in the users site-packaes directory."""
+    """To install in the user's site-packages directory."""
 
     site_path = os.path.join(site.getusersitepackages(), "pep582.py")
     site_pth = os.path.join(site.getusersitepackages(), "pep582.pth")
@@ -50,7 +50,7 @@ def install():
 
 
 def uninstall():
-    """To uninstall from the users site-packages directory"""
+    """To uninstall from the user's site-packages directory"""
 
     site_packages = site.getusersitepackages()
     site_path = os.path.join(site_packages, "pep582.py")
